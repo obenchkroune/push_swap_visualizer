@@ -52,7 +52,7 @@ npm install
 ```
 
 ```bash
-npm make
+npm run make
 ```
 
 this command will build the appropriate release for your current operating system,
