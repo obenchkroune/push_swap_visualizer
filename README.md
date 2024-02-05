@@ -20,8 +20,12 @@ chmod u+x push_swap_visualizer
 
 or just add an alias in your ~/.zshrc file
 
-```zsh
-alias psv="/path/to/push_swap_visualizer' &
+```bash
+alias psv="/path/to/push_swap_visualizer &"
+```
+
+```bash
+psv
 ```
 
 otherwise just run this command if you have admin rights
