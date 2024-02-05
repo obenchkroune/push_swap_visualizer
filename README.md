@@ -15,16 +15,22 @@ dpkg -x /path/to/push-swap-visualizer_1.0.0_amd64.deb ~/Desktop
 ```bash
 cd ~/Desktop/usr/bin
 chmod u+x push_swap_visualizer
-./push_swap_visualizer
+./push_swap_visualizer &
 ```
 
-otherwise just run
+or just add an alias in your ~/.zshrc file
+
+```zsh
+alias psv="/path/to/push_swap_visualizer'
+```
+
+otherwise just run this command if you have admin rights
 ```bash
 dpkg -i /path/to/push-swap-visualizer_1.0.0_amd64.deb
 ```
 and you are good to go!
 
-MacOS and Window🗿 executables comming soon... 💯
+MacOS and Windows🗿 executables comming soon... 💯
 
 🧬 inspiration:
 - [o-reo](https://github.com/o-reo/push_swap_visualizer)
@@ -32,4 +38,4 @@ MacOS and Window🗿 executables comming soon... 💯
 🗿 support:
 - [patreon](https://patreon.com/obenchkr)
 
-enjoy 🥳.
+enjoy and good luck in your 42 journey 🥳.
