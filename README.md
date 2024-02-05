@@ -34,7 +34,31 @@ dpkg -i /path/to/push-swap-visualizer_1.0.0_amd64.deb
 ```
 and you are good to go!
 
-MacOS and Windows🗿 executables comming soon... 💯
+MacOS and Windows🗿 releases comming soon... 💯
+
+but if you want you can also build from source
+all you need is nodejs
+
+```bash
+git clone https://github.com/obenchkroune/push_swap_visualizer.git
+```
+
+```bash
+cd push_swap_visualizer
+```
+
+```bash
+npm install
+```
+
+```bash
+npm make
+```
+
+this command will build the appropriate release for your current operating system,
+and voila! your push swap visualizer will be available at the out/ directory.
+
+PRs are welcome anytime and if theres any bug encountered please let me know!
 
 🧬 inspiration:
 - [o-reo](https://github.com/o-reo/push_swap_visualizer)
@@ -42,4 +66,4 @@ MacOS and Windows🗿 executables comming soon... 💯
 🗿 support:
 - [patreon](https://patreon.com/obenchkr)
 
-enjoy and good luck in your 42 journey 🥳.
+hope this is helpful and good luck in your 42 journey 🥳.
