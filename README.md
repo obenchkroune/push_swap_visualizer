@@ -1,5 +1,5 @@
 # Push swap visualizer
-This project help you visualize your push swap algorithm using a step by step graphical interface.
+This project help you visualize your push swap algorithm using a step by step graphical interface supported for debian and Red hat 😈.
 
 ## How to install
 
