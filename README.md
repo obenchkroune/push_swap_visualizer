@@ -1,5 +1,5 @@
 # Push swap visualizer
-This project help you visualize your push swap algorithm using a graphical interface.
+This project help you visualize your push swap algorithm using a step by step graphical interface.
 
 ## How to install
 
@@ -17,6 +17,12 @@ cd ~/Desktop/usr/bin
 chmod u+x push_swap_visualizer
 ./push_swap_visualizer
 ```
+
+otherwise just run
+```bash
+dpkg -i /path/to/push-swap-visualizer_1.0.0_amd64.deb
+```
+and you are good to go!
 
 MacOS and Window🗿 executables comming soon... 💯
 
