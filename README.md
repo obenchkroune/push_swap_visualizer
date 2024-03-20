@@ -34,7 +34,9 @@ dpkg -i /path/to/push-swap-visualizer_1.0.0_amd64.deb
 ```
 and you are good to go!
 
-MacOS and Windows🗿 releases comming soon... 💯
+## Mac OS
+
+download [this file](https://github.com/obenchkroune/push_swap_visualizer/releases/download/v1.0.0/push_swap_visualizer-darwin-10.14-and-below-x64-1.0.0.zip) unzip it and run the app and thats it!
 
 but if you want you can also build from source
 all you need is nodejs
@@ -62,8 +64,5 @@ PRs are welcome anytime and if theres any bug encountered please let me know!
 
 🧬 inspiration:
 - [o-reo](https://github.com/o-reo/push_swap_visualizer)
-
-🗿 support:
-- [patreon](https://patreon.com/obenchkr)
 
 hope this is helpful and good luck in your 42 journey 🥳.
