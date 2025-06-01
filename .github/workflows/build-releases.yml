@@ -20,9 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
-          cache: "npm"
-          cache-dependency-path: push_swap_visualizer/package.json
+          node-version: "22.x"
 
       - name: Install dependencies
         working-directory: ./push_swap_visualizer
