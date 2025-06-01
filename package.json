@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^5.0.0",
     "@vitejs/plugin-vue": "^5.0.3",
     "autoprefixer": "^10.4.17",
-    "electron": "26.0.0",
+    "electron": "^26.6.10",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
     "postcss": "^8.4.33",
@@ -41,7 +41,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "primeicons": "^6.0.1",
     "primevue": "^3.47.2",
-    "vite-plugin-commonjs-externals": "^0.1.4",
+    "vite-plugin-commonjs-externals": "^0.1.1",
     "vue": "^3.4.15"
   }
 }
