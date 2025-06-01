@@ -2,8 +2,8 @@ name: Build and Release Electron App
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "v*.*.*"
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
 
     steps:
       - name: Check out Git repository
@@ -32,28 +34,54 @@ jobs:
           CI: true
         run: npm run make
 
-      - name: Upload Linux Artifacts (deb & rpm)
+      - name: Prepare Linux Assets
         if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v4
-        with:
-          name: push_swap_visualizer-linux-dist-${{ github.sha }}
-          path: |
-            ./out/make/deb/*/*.deb
-            ./out/make/rpm/*/*.rpm
-          retention-days: 7
+        run: |
 
-      - name: Upload Windows Artifacts (Squirrel.Windows)
+
+
+          echo "LINUX_ASSETS=./out/make/deb/*/*.deb ./out/make/rpm/*/*.rpm" >> $GITHUB_ENV
+
+      - name: Prepare Windows Assets
         if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: push_swap_visualizer-windows-dist-${{ github.sha }}
-          path: ./out/make/squirrel.windows/**/*
-          retention-days: 7
+        run: |
+          echo "WINDOWS_ASSETS=./out/make/squirrel.windows/**/*" >> $GITHUB_ENV
 
-      - name: Upload macOS Artifact (zip)
+      - name: Prepare macOS Assets
         if: runner.os == 'macOS'
+        run: |
+          echo "MACOS_ASSETS=./out/make/*.zip" >> $GITHUB_ENV
+
+      - name: Upload Build Artifacts for Release
         uses: actions/upload-artifact@v4
         with:
-          name: push_swap_visualizer-macos-dist-${{ github.sha }}
-          path: ./out/make/*.zip
-          retention-days: 7
+          name: ${{ matrix.os }}-build-artifacts
+          path: |
+            ./out/make/**/*
+          retention-days: 1
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            artifacts/macos-latest-build-artifacts/out/make/*.zip
+            artifacts/ubuntu-latest-build-artifacts/out/make/deb/*/*.deb
+            artifacts/ubuntu-latest-build-artifacts/out/make/rpm/*/*.rpm
+            artifacts/windows-latest-build-artifacts/out/make/squirrel.windows/**/*
