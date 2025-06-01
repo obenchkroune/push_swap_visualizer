@@ -1,30 +1,42 @@
-name: Build Releases
+name: Build and Release Electron App
+
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-        node-version: [22.x]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: push_swap_visualizer/package-lock.json
+
       - name: Install dependencies
+        working-directory: ./push_swap_visualizer
         run: npm ci
-      - name: Package application
-        run: npm run package
-      - name: Make installers
+
+      - name: Build Electron app
+        working-directory: ./push_swap_visualizer
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
         run: npm run make
-      - name: Upload release artifacts
-        uses: actions/upload-artifact@v3
+
+      - name: Upload build artifacts - ${{ matrix.os }}
+        uses: actions/upload-artifact@v4
         with:
-          name: release-${{ matrix.os }}
-          path: out/**
+          name: push_swap_visualizer-build-${{ matrix.os }}
+          path: push_swap_visualizer/out/make/
+          if-no-files-found: error
