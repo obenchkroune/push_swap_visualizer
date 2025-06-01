@@ -23,11 +23,11 @@ jobs:
           node-version: "22.x"
 
       - name: Install dependencies
-        working-directory: ./push_swap_visualizer
+        working-directory: .
         run: npm ci
 
       - name: Build Electron app
-        working-directory: ./push_swap_visualizer
+        working-directory: .
         env:
           CI: true
         run: npm run make
@@ -38,8 +38,8 @@ jobs:
         with:
           name: push_swap_visualizer-linux-dist-${{ github.sha }}
           path: |
-            push_swap_visualizer/out/make/deb/*/*.deb
-            push_swap_visualizer/out/make/rpm/*/*.rpm
+            ./out/make/deb/*/*.deb
+            ./out/make/rpm/*/*.rpm
           retention-days: 7
 
       - name: Upload Windows Artifacts (Squirrel.Windows)
@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: push_swap_visualizer-windows-dist-${{ github.sha }}
-          path: push_swap_visualizer/out/make/squirrel.windows/**/*
+          path: ./out/make/squirrel.windows/**/*
           retention-days: 7
 
       - name: Upload macOS Artifact (zip)
@@ -55,5 +55,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: push_swap_visualizer-macos-dist-${{ github.sha }}
-          path: push_swap_visualizer/out/make/*.zip
+          path: ./out/make/*.zip
           retention-days: 7
