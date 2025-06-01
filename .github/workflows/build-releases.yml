@@ -10,19 +10,19 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Check out code
+      - name: Check out Git repository
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "18.x"
           cache: "npm"
-          cache-dependency-path: push_swap_visualizer/package-lock.json
+          cache-dependency-path: push_swap_visualizer/package.json
 
       - name: Install dependencies
         working-directory: ./push_swap_visualizer
@@ -31,12 +31,31 @@ jobs:
       - name: Build Electron app
         working-directory: ./push_swap_visualizer
         env:
-          CSC_IDENTITY_AUTO_DISCOVERY: false
+          CI: true
         run: npm run make
 
-      - name: Upload build artifacts - ${{ matrix.os }}
+      - name: Upload Linux Artifacts (deb & rpm)
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: push_swap_visualizer-build-${{ matrix.os }}
-          path: push_swap_visualizer/out/make/
-          if-no-files-found: error
+          name: push_swap_visualizer-linux-dist-${{ github.sha }}
+          path: |
+            push_swap_visualizer/out/make/deb/*/*.deb
+            push_swap_visualizer/out/make/rpm/*/*.rpm
+          retention-days: 7
+
+      - name: Upload Windows Artifacts (Squirrel.Windows)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: push_swap_visualizer-windows-dist-${{ github.sha }}
+          path: push_swap_visualizer/out/make/squirrel.windows/**/*
+          retention-days: 7
+
+      - name: Upload macOS Artifact (zip)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: push_swap_visualizer-macos-dist-${{ github.sha }}
+          path: push_swap_visualizer/out/make/*.zip
+          retention-days: 7
